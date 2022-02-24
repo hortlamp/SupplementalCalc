@@ -45,7 +45,7 @@ Header_Details <- list(img(src = "LampLogo.png", height="30%", width="30%", alig
                        h2(em("Welcome to our ‘How large should my lighting system be’ calculator!"), align="center"),
                        br(),
                        br(),
-                       h2(em("With this calculator, users specify on how many days of year they want to be able to reach the target DLI (expressed as a percentage of 365 days). After entering what % of days you want to reach the target DLI, the calculator will determine the required lighting capacity, and provide a graphical summary of the lighting conditions you can expect in your greenhouse. This lighting system also estimates the demand charge, associated with the use of the lighting system. This calculator is particularly for the design of new lighting installations.")),
+                       h2(em("With this calculator, users specify on how many days of year they want to be able to reach the target DLI (expressed as a percentage of 365 days). After entering what percentage of days you want to reach the target DLI, the calculator will determine the required lighting capacity, and provide a graphical summary of the lighting conditions you can expect in your greenhouse. This lighting system also estimates the demand charge, associated with the use of the lighting system. This calculator is particularly useful for the design of new lighting installations.")),
                        br(),
                        h2("This tool was developed for greenhouse growers as part of Project LAMP,",
                           em("lighting approaches to maximize profits."),"Our goal is to maximize controlled

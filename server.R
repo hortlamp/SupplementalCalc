@@ -91,7 +91,7 @@ function(input, output, session) {
                                               bsPopover(id = "b5", title = "", content = "Typically, between 1.2 and 3.5 umol/J. Use numbers only.", placement="right", trigger="hover",options = list(container = "body"))),
                                           div(title="Percent of days where you reach your target DLI",
                                               textInput(inputId ="New_GHD_Percentile",
-                                                        label = p("Percentile",
+                                                        label = p("Percentage of Days Where You Reach Target DLI (%)",
                                                                   bsButton("b6", label = "", icon = icon("question"), style = "info", size = "extra-small"), style = "width:200px")),
                                               bsPopover(id = "b6", title="Between 0 to 100 Use numbers only.", content = "Percent of days where you reach your target DLI.", placement="right", trigger="hover",options = list(container = "body"))),
                                           div(title="Photoperiod",
@@ -101,9 +101,9 @@ function(input, output, session) {
                                               bsPopover(id = "b7", title="", content = "How many hours each day will you have your lights on?", placement="right", trigger="hover",options = list(container = "body"))),
                                           div(title="Monthly Demand Charge Price",
                                               textInput(inputId ="New_GHD_demand_charge_price",
-                                                        label = p("Monthly Demand Charge Price",
+                                                        label = p("Monthly Demand Charge Price ($/kW)",
                                                                   bsButton("b8", label = "", icon = icon("question"), style = "info", size = "extra-small"), style = "width:200px")),
-                                              bsPopover(id = "b8", title="", content = "Typically, between 1.50 and 13.50 $/kW. Use numbers only. Commercial customers typically pay a demand charge as part of the elecricity bill, based on their peak power usage. The price for this charge is normally shown on the power bill as $/kW/month", placement="right", trigger="hover",options = list(container = "body")))
+                                              bsPopover(id = "b8", title="", content = "This charge may range from $5 to over $15/kW. Use numbers only. Commercial customers typically pay a demand charge as part of the elecricity bill, based on their peak power usage. The price for this charge is typically shown on the power bill as $/kW.", placement="right", trigger="hover",options = list(container = "body")))
                           ),#bracket column 1
                           #Gear icon for customize % of lighting area by month
                           column(5, 
@@ -164,7 +164,7 @@ function(input, output, session) {
                               column(4,
                                      h4("Annual Lighting Cost"),
                                      tableOutput("Annual_SC_Display_table"),
-                                     h4("Annual Demand Charge"),
+                                     h4("Annual Demand Cost"),
                                      tableOutput("DSC_Display_table")
                               )
                             ), fluidRow(column(6,
@@ -821,7 +821,7 @@ function(input, output, session) {
           labs(title = paste0("Days at or below a DLI of ", target),
                caption = paste0("Red line indicates the target DLI of ",target, "(mol/m2/d)")) +
           theme(plot.caption = element_text(size = 13)) +
-          ylab("Sunlight DLI (mol/m2/d)") + xlab("Date")
+          ylab("Sunlight DLI (mol/m2/d)") + xlab("Date") + scale_x_date(name = "Date", date_breaks = '1 month', date_labels = '%b')
       })
       
       # Create a plot to visualize the amount of supplemental light needed each day where the intercept represents the DLI capacity needed to cover X percent of days
@@ -844,7 +844,7 @@ function(input, output, session) {
                               percentile*100, "% of the days"),
                caption = paste0("Red line indicates the maximum supplemental DLI needed, which is ",round(Percentile_Supplemental_DLI,2), "(mol/m2/d)")) +
           theme(plot.caption = element_text(size = 13)) +
-          ylab("Supplemental DLI needed (mol/m2/d)") + xlab("Date")
+          ylab("Supplemental DLI needed (mol/m2/d)") + xlab("Date") + scale_x_date(name = "Date", date_breaks = '1 month', date_labels = '%b')
       })
       
       # Calculate the implicit PPFD Capability of the system
@@ -1141,7 +1141,7 @@ function(input, output, session) {
                                 percentile2*100, "% of the days"),
                  caption = paste0("Red line indicates the maximum supplemental DLI needed, which is ",XTRA_values$suppInt, "(mol/m2/d)")) +
             theme(plot.caption = element_text(size = 13)) +
-            ylab("Supplemental DLI needed (mol/m2/d)") + xlab("Date")
+            ylab("Supplemental DLI needed (mol/m2/d)") + xlab("Date") + scale_x_date(name = "Date", date_breaks = '1 month', date_labels = '%b')
         })
       })
       
@@ -1159,7 +1159,7 @@ function(input, output, session) {
             labs(title = paste0("Days at or below a DLI of ", target),
                  caption = paste0("Red line indicates the target DLI of ",target, "(mol/m2/d)")) + 
             theme(plot.caption = element_text(size = 13)) +
-            ylab("Sunlight DLI (mol/m2/d)") + xlab("Date")
+            ylab("Sunlight DLI (mol/m2/d)") + xlab("Date") + scale_x_date(name = "Date", date_breaks = '1 month', date_labels = '%b')
         })
         
         # Create a plot showing lighting capacity (supplemental DLI) to reach target DLI X% of days
@@ -1173,7 +1173,7 @@ function(input, output, session) {
                                 percentile*100, "% of the days"),
                  caption = paste0("Red line indicates the maximum supplemental DLI needed, which is ",round(Percentile_Supplemental_DLI,2), "(mol/m2/d)")) +
             theme(plot.caption = element_text(size = 13)) +
-            ylab("Supplemental DLI needed (mol/m2/d)") + xlab("Date")
+            ylab("Supplemental DLI needed (mol/m2/d)") + xlab("Date") + scale_x_date(name = "Date", date_breaks = '1 month', date_labels = '%b')
         })
         
         # Output the PPFD Capability & Supplemental DLI as a valueBox for users to see
