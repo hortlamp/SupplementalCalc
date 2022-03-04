@@ -205,7 +205,7 @@ function(input, output, session) {
   ###############################################. 
   Loc_values <- reactiveValues() # empty list to store reactive values for new location try
   XTRA_values <- reactiveValues() # empty list to store various values so it can be used downstream
-
+  
   # Note that we use observeEvent() here, which depends on input$Location_save (the action button), so that the output is only updated when the grower clicks the button
   observeEvent(input$Location_save, { # When action button "Location_save" is clicked run code in this section
     
@@ -484,7 +484,7 @@ function(input, output, session) {
     
     #Remove extra columns to display only month and area %
     output$Percent_table_SC <- renderTable(t_area[3,, drop=F])
-
+    
     # Create lists to store values used in the for-loop below to manipulate the start date of the year to that of the first Monday of the year
     val <- list()
     weeksum <- list()
@@ -513,7 +513,7 @@ function(input, output, session) {
     week1 <- unlist(weekStart)
     
     #Manually adjust overlapping months (easy). This and next year are done. Takes 3-5 mins.
-    if (year(Sys.Date() == 2022)){
+    if (lubridate::year(as.Date(Sys.Date(), format = "%Y-%m-%d")) == 2022){
       weekavg1[5] <- (1*AP_values$PerOfOne[[1]] + 6*AP_values$PerOfOne[[2]])/7
       weekavg1[9] <- (1*AP_values$PerOfOne[[2]] + 6*AP_values$PerOfOne[[3]])/7
       weekavg1[13] <- (4*AP_values$PerOfOne[[3]] + 3*AP_values$PerOfOne[[4]])/7
@@ -525,7 +525,7 @@ function(input, output, session) {
       weekavg1[44] <- (1*AP_values$PerOfOne[[10]] + 6*AP_values$PerOfOne[[11]])/7
       weekavg1[48] <- (3*AP_values$PerOfOne[[11]] + 4*AP_values$PerOfOne[[12]])/7
       weekavg1[52] <- AP_values$PerOfOne[[12]] 
-    } else if (year(Sys.Date() == 2023)) {
+    } else if (lubridate::year(as.Date(Sys.Date(), format = "%Y-%m-%d")) == 2023) {
       weekavg1[5] <- (2*AP_values$PerOfOne[[1]] + 5*AP_values$PerOfOne[[2]])/7
       weekavg1[9] <- (2*AP_values$PerOfOne[[2]] + 5*AP_values$PerOfOne[[3]])/7
       weekavg1[13] <- (5*AP_values$PerOfOne[[3]] + 2*AP_values$PerOfOne[[4]])/7
@@ -537,7 +537,7 @@ function(input, output, session) {
       weekavg1[44] <- (2*AP_values$PerOfOne[[10]] + 5*AP_values$PerOfOne[[11]])/7
       weekavg1[48] <- (3*AP_values$PerOfOne[[11]] + 4*AP_values$PerOfOne[[12]])/7
       weekavg1[52] <- AP_values$PerOfOne[[12]]
-    } else if (year(Sys.Date() == 2024)){ #Leap year
+    } else if (lubridate::year(as.Date(Sys.Date(), format = "%Y-%m-%d")) == 2024){ #Leap year
       weekavg1[5] <- (3*AP_values$PerOfOne[[1]] + 4*AP_values$PerOfOne[[2]])/7
       weekavg1[9] <- (4*AP_values$PerOfOne[[2]] + 3*AP_values$PerOfOne[[3]])/7
       weekavg1[18] <- (2*AP_values$PerOfOne[[4]] + 5*AP_values$PerOfOne[[5]])/7
@@ -559,7 +559,7 @@ function(input, output, session) {
       weekavg1[39] <- (5*AP_values$PerOfOne[[9]] + 2*AP_values$PerOfOne[[10]])/7
       weekavg1[44] <- (1*AP_values$PerOfOne[[10]] + 6*AP_values$PerOfOne[[11]])/7
       weekavg1[48] <- (3*AP_values$PerOfOne[[11]] + 4*AP_values$PerOfOne[[12]])/7
-    } 
+    }
     
     Area_week <- data.frame(weekavg1,week1)
     names(Area_week) <- c("Percent", "Week")
@@ -620,12 +620,12 @@ function(input, output, session) {
       percentile <- as.numeric(GHD_values$Percentile)/100
       hours <- as.numeric(GHD_values$hours)
       demand_charge_price <- as.numeric(GHD_values$demand_charge_price)
-
+      
       #Calculate the area for each month based on percent of coverage
       PA_Months <- as.numeric(AP_values$percent)/100
       monthly_areaft2 <- vector(mode="numeric", length=12)
       monthly_aream2 <- vector(mode="numeric", length=12)
-
+      
       for(i in 1:12) {
         monthly_areaft2[i] <- area*(PA_Months[i])
         monthly_aream2[i] <- monthly_areaft2[i]/10.764
@@ -658,7 +658,7 @@ function(input, output, session) {
       week1 <- unlist(weekStart)
       
       #Manually adjust overlapping months (easy). This and next year are done. Takes 3-5 mins.
-      if (year(Sys.Date() == 2022)){
+      if (lubridate::year(as.Date(Sys.Date(), format = "%Y-%m-%d")) == 2022){
         weekavg1[5] <- (1*AP_values$PerOfOne[[1]] + 6*AP_values$PerOfOne[[2]])/7
         weekavg1[9] <- (1*AP_values$PerOfOne[[2]] + 6*AP_values$PerOfOne[[3]])/7
         weekavg1[13] <- (4*AP_values$PerOfOne[[3]] + 3*AP_values$PerOfOne[[4]])/7
@@ -670,7 +670,7 @@ function(input, output, session) {
         weekavg1[44] <- (1*AP_values$PerOfOne[[10]] + 6*AP_values$PerOfOne[[11]])/7
         weekavg1[48] <- (3*AP_values$PerOfOne[[11]] + 4*AP_values$PerOfOne[[12]])/7
         weekavg1[52] <- AP_values$PerOfOne[[12]] 
-      } else if (year(Sys.Date() == 2023)) {
+      } else if (lubridate::year(as.Date(Sys.Date(), format = "%Y-%m-%d")) == 2023) {
         weekavg1[5] <- (2*AP_values$PerOfOne[[1]] + 5*AP_values$PerOfOne[[2]])/7
         weekavg1[9] <- (2*AP_values$PerOfOne[[2]] + 5*AP_values$PerOfOne[[3]])/7
         weekavg1[13] <- (5*AP_values$PerOfOne[[3]] + 2*AP_values$PerOfOne[[4]])/7
@@ -682,7 +682,7 @@ function(input, output, session) {
         weekavg1[44] <- (2*AP_values$PerOfOne[[10]] + 5*AP_values$PerOfOne[[11]])/7
         weekavg1[48] <- (3*AP_values$PerOfOne[[11]] + 4*AP_values$PerOfOne[[12]])/7
         weekavg1[52] <- AP_values$PerOfOne[[12]]
-      } else if (year(Sys.Date() == 2024)){ #Leap year
+      } else if (lubridate::year(as.Date(Sys.Date(), format = "%Y-%m-%d")) == 2024){ #Leap year
         weekavg1[5] <- (3*AP_values$PerOfOne[[1]] + 4*AP_values$PerOfOne[[2]])/7
         weekavg1[9] <- (4*AP_values$PerOfOne[[2]] + 3*AP_values$PerOfOne[[3]])/7
         weekavg1[18] <- (2*AP_values$PerOfOne[[4]] + 5*AP_values$PerOfOne[[5]])/7
@@ -704,7 +704,7 @@ function(input, output, session) {
         weekavg1[39] <- (5*AP_values$PerOfOne[[9]] + 2*AP_values$PerOfOne[[10]])/7
         weekavg1[44] <- (1*AP_values$PerOfOne[[10]] + 6*AP_values$PerOfOne[[11]])/7
         weekavg1[48] <- (3*AP_values$PerOfOne[[11]] + 4*AP_values$PerOfOne[[12]])/7
-      } 
+      }
       
       PA_Weeks <- weekavg1
       
@@ -980,7 +980,7 @@ function(input, output, session) {
         
         # Store the user input table to be outputted in the excel file
         XTRA_values$SC_df_Adjusted <- SC_df
-
+        
         # Calculate weekly electricity costs
         SC_df_W <- SC_df1 %>%
           group_by(Week) %>%
@@ -1007,7 +1007,7 @@ function(input, output, session) {
         Annual_SC_Display$`$ Per ft2` <- prettyNum(round(Annual_SC_Display$`$ Per ft2`, digits = 3), big.mark = ',')
         Annual_SC_Display$`$ Per acre` <- prettyNum(round(Annual_SC_Display$`$ Per acre`, digits = 0), big.mark = ',')
         Annual_SC_Display$`$ Total Design` <- prettyNum(round(Annual_SC_Display$`$ Total Design`, digits = 0), big.mark = ',')
-
+        
         # Create a monthly electricity cost to be displayed in the excel sheet via the adjusted download button
         SC_df_M <- SC_df %>%
           group_by(Month) %>%
@@ -1063,7 +1063,7 @@ function(input, output, session) {
         
         # Store the adjusted values for excel download
         XTRA_values$Annual_SC_demand_Display_Adjusted <- Annual_SC_demand_Display
-
+        
         # Calculate the new percentile that results when the user interacts with the graph so it can be stored in the adjusted user values dataframe
         DLI_table$Target_DLI_Reached <- DLI_table$Supplemental <= XTRA_values$suppInt
         percentile2 <- round((sum(DLI_table$Target_DLI_Reached == TRUE)/length(DLI_table$Target_DLI_Reached)),3)
@@ -1135,7 +1135,7 @@ function(input, output, session) {
         Annual_SC_Display$`$ Per ft2` <- prettyNum(round(Annual_SC_Display$`$ Per ft2`, digits = 3), big.mark = ',')
         Annual_SC_Display$`$ Per acre` <- prettyNum(round(Annual_SC_Display$`$ Per acre`, digits = 0), big.mark = ',')
         Annual_SC_Display$`$ Total Design` <- prettyNum(round(Annual_SC_Display$`$ Total Design`, digits = 0), big.mark = ',')
-
+        
         # Create a monthly electricity cost to be displayed in the excel sheet via the adjusted download button
         SC_df_M <- SC_df %>%
           group_by(Month) %>%
@@ -1187,7 +1187,7 @@ function(input, output, session) {
         
         # Store the adjusted values for excel download
         XTRA_values$Annual_SC_demand_Display_Adjusted <- Annual_SC_demand_Display
-
+        
         # Send the tables to the UI
         output$Annual_SC_Display_table<- renderTable({
           Annual_SC_Display # Estimated Annual Electricity Summary Costs
