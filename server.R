@@ -168,7 +168,7 @@ function(input, output, session) {
                                      tableOutput("DSC_Display_table")
                               )
                             ), fluidRow(column(6,
-                                               h4("Sunlight"),
+                                               h4("Sunlight (accounting for transmission)"),
                                                plotOutput({"naturalDLI"})),
                                         column(6,
                                                h4("Supplemental Light"),
